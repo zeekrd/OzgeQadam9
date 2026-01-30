@@ -19,7 +19,7 @@
                     },
                     colors: {
                         brand: {
-                            dark: '#030712',
+                            dark: '#030712', // Очень темный
                             panel: '#0f172a',
                             blue: '#2563eb',
                             cyan: '#06b6d4',
@@ -59,12 +59,16 @@
 
     <style>
         body { background-color: #030712; color: #e2e8f0; overflow-x: hidden; }
+        
+        /* Кибер-сетка на фоне */
         .bg-grid {
             background-size: 50px 50px;
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
         }
+
+        /* Glassmorphism Pro */
         .glass { 
             background: rgba(17, 24, 39, 0.7);
             backdrop-filter: blur(20px); 
@@ -72,6 +76,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08); 
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
+        
         .glass-card {
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -82,23 +87,37 @@
             border-color: rgba(6, 182, 212, 0.4);
             box-shadow: 0 15px 40px -10px rgba(6, 182, 212, 0.2);
         }
+
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        
+        /* Табы */
         .tab-active { background: linear-gradient(90deg, #2563eb, #06b6d4); color: white; box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
         .tab-inactive { background: rgba(255,255,255,0.03); color: #94a3b8; border: 1px solid rgba(255,255,255,0.05); }
-        .chat-bubble-bot { background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-top-left-radius: 0; }
-        .chat-bubble-user { background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); border-top-right-radius: 0; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
 
-        /* Кастомный стиль для Popup, чтобы текст был виден на черном */
+        /* Чат */
+        .chat-bubble-bot {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top-left-radius: 0;
+        }
+        .chat-bubble-user {
+            background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            border-top-right-radius: 0;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Leaflet Map Styling */
+        /* ИСПРАВЛЕНИЕ: Белый фон для текста на карте */
         .leaflet-popup-content-wrapper { 
             background: white !important; 
             color: black !important; 
-            border-radius: 12px;
+            border-radius: 1rem; 
         }
         .leaflet-popup-tip { background: white !important; }
 
-        /* Пульсирующий маркер пользователя */
+        /* НОВОЕ: Стиль маркера пользователя */
         .user-location-marker {
             background: #2563eb;
             border: 3px solid white;
@@ -116,6 +135,10 @@
 <body class="selection:bg-cyan-500/30">
 
     <div class="fixed inset-0 z-[-1] bg-grid animate-grid-move"></div>
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[120px] animate-blob"></div>
+        <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000"></div>
+    </div>
 
     <header class="fixed w-full top-0 z-50 bg-[#030712]/80 backdrop-blur-xl border-b border-white/5 transition-all">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -128,12 +151,16 @@
                     <span class="font-display font-bold text-xs tracking-[0.3em] text-blue-500 leading-none mt-1">QADAM</span>
                 </div>
             </div>
+            
             <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/5 backdrop-blur-md">
-                <a href="#map-section" class="px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">Карта</a>
-                <a href="#career" class="px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">Работа</a>
-                <a href="#mentors" class="px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">Менторы</a>
+                <a href="#map-section" class="px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/10 transition-all">Карта</a>
+                <a href="#career" class="px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/10 transition-all">Работа</a>
+                <a href="#mentors" class="px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/10 transition-all">Менторы</a>
             </nav>
-            <button onclick="openAuthModal()" class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-8 py-2.5 rounded-xl text-xs font-bold uppercase transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] border border-white/10">Войти</button>
+
+            <button onclick="openAuthModal()" class="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white px-8 py-2.5 rounded-xl text-xs font-bold uppercase transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] border border-white/10">
+                Войти
+            </button>
         </div>
     </header>
 
@@ -141,29 +168,34 @@
 
         <div class="lg:col-span-4 space-y-4">
             <div class="glass rounded-[2rem] sticky top-24 h-[calc(100vh-120px)] flex flex-col shadow-2xl ring-1 ring-white/10 overflow-hidden">
-                <div class="p-6 bg-gradient-to-b from-slate-900/80 to-slate-900/40 border-b border-white/5 flex items-center gap-4">
-                    <div class="relative">
-                        <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-white/10 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(37,99,235,0.3)]">🤖</div>
-                        <span class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse-glow border-2 border-[#0f172a]"></span>
-                    </div>
-                    <div>
-                        <h2 class="font-display text-sm font-bold text-white">Ozge Assistant</h2>
-                        <p class="text-[10px] text-cyan-400 font-mono mt-1">System Online • v6.0</p>
-                    </div>
-                </div>
-                <div id="chat-window" class="flex-1 overflow-y-auto p-5 space-y-6 custom-scroll">
-                    <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-sm border border-white/10">🤖</div>
-                        <div class="chat-bubble-bot p-4 rounded-2xl text-slate-200 text-sm shadow-lg max-w-[90%]">
-                            <p class="font-medium mb-1 text-white">Салем! 👋</p>
-                            <p class="text-xs text-slate-400">Я готов помочь тебе сориентироваться в городе.</p>
+                <div class="p-6 bg-gradient-to-b from-slate-900/80 to-slate-900/40 border-b border-white/5 flex items-center justify-between relative">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-white/10 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(37,99,235,0.3)]">🤖</div>
+                            <span class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse-glow border-2 border-[#0f172a]"></span>
+                        </div>
+                        <div>
+                            <h2 class="font-display text-sm font-bold text-white tracking-wide">Ozge Assistant</h2>
+                            <p class="text-[10px] text-cyan-400 font-mono mt-1">System Online • v6.0</p>
                         </div>
                     </div>
                 </div>
+
+                <div id="chat-window" class="flex-1 overflow-y-auto p-5 space-y-6 custom-scroll bg-gradient-to-b from-transparent to-[#02040a]/50">
+                    <div class="flex items-start gap-3 animate-fade-in">
+                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-sm border border-white/10">🤖</div>
+                        <div class="chat-bubble-bot p-4 rounded-2xl text-slate-200 text-sm shadow-lg max-w-[90%]">
+                            <p class="font-medium mb-1 text-white">Салем! 👋</p>
+                            <p class="text-xs text-slate-400 leading-relaxed">Я обновил базу данных. Теперь на карте есть всё: от пробок до лучших кафе. Чем помочь?</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="p-4 bg-[#02040a]/60 backdrop-blur-md border-t border-white/5">
                     <div class="relative group">
-                        <input id="user-input" type="text" placeholder="Введите сообщение..." class="w-full bg-slate-900/50 border border-slate-700/50 text-slate-200 rounded-xl pl-4 pr-12 py-4 text-sm focus:outline-none focus:border-cyan-500 transition-all">
-                        <button id="send-btn" class="absolute right-2 top-2.5 p-2 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg text-white shadow-lg">
+                        <input id="user-input" type="text" placeholder="Введите сообщение..." 
+                            class="w-full bg-slate-900/50 border border-slate-700/50 group-hover:border-cyan-500/50 text-slate-200 rounded-xl pl-4 pr-12 py-4 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-slate-600 shadow-inner">
+                        <button id="send-btn" class="absolute right-2 top-2.5 p-2 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg text-white hover:scale-105 transition-all shadow-lg">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9-2-9-18-9 18 9-2zm0 0v-8" /></svg>
                         </button>
                     </div>
@@ -172,132 +204,539 @@
         </div>
 
         <div class="lg:col-span-8 space-y-8">
-            <div id="map-section" class="glass rounded-[2.5rem] p-2 border-t border-cyan-500/20 relative shadow-2xl group overflow-hidden">
-                <div class="absolute top-6 left-6 right-6 z-[400] flex gap-2 overflow-x-auto no-scrollbar pb-2">
-                    <button onclick="filterMap('jobs')" class="whitespace-nowrap bg-slate-900/90 text-indigo-200 hover:bg-indigo-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-indigo-500/30 transition-all shadow-lg flex items-center gap-2"><span>💼</span> Работа</button>
-                    <button onclick="filterMap('services')" class="whitespace-nowrap bg-slate-900/90 text-cyan-200 hover:bg-cyan-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-cyan-500/30 transition-all shadow-lg flex items-center gap-2"><span>🏛</span> ЦОНы</button>
-                    <button onclick="filterMap('food')" class="whitespace-nowrap bg-slate-900/90 text-orange-200 hover:bg-orange-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-orange-500/30 transition-all shadow-lg flex items-center gap-2"><span>🍔</span> Еда</button>
-                    <button onclick="filterMap('leisure')" class="whitespace-nowrap bg-slate-900/90 text-green-200 hover:bg-green-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-green-500/30 transition-all shadow-lg flex items-center gap-2"><span>🌳</span> Отдых</button>
+
+            <div class="relative rounded-[2.5rem] overflow-hidden min-h-[360px] group shadow-2xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1558588942-930faae5a389?q=80&w=2070" class="absolute inset-0 w-full h-full object-cover transition duration-[3s] group-hover:scale-110 opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/60 to-transparent"></div>
+                
+                <div class="absolute bottom-0 left-0 p-10 md:p-12 w-full z-10">
+                    <div class="flex items-center gap-3 mb-6">
+                         <div class="h-[1px] w-12 bg-cyan-500"></div>
+                         <span class="text-cyan-400 text-xs font-bold uppercase tracking-[0.2em] animate-pulse">Live Update</span>
+                    </div>
+                    <h1 class="font-display text-4xl md:text-6xl leading-tight mb-4 text-white drop-shadow-2xl">
+                        Твой Город.<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">Твои Правила.</span>
+                    </h1>
+                    <p class="text-slate-300 max-w-lg text-sm leading-relaxed">
+                        Единая цифровая платформа для жизни в Алматы: работа, досуг, госуслуги и поддержка комьюнити.
+                    </p>
+                </div>
+            </div>
+
+            <div id="map-section" class="glass rounded-[2.5rem] p-2 border-t border-cyan-500/20 relative shadow-2xl group">
+                <div class="absolute top-6 left-6 right-6 z-[400] flex gap-2 overflow-x-auto custom-scroll pb-2 no-scrollbar">
+                    <button onclick="filterMap('jobs')" class="whitespace-nowrap bg-slate-900/90 text-indigo-200 hover:bg-indigo-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-indigo-500/30 backdrop-blur-xl transition-all shadow-lg flex items-center gap-2 transform hover:scale-105">
+                        <span>💼</span> Работа (10)
+                    </button>
+                    <button onclick="filterMap('traffic')" id="traffic-btn" class="whitespace-nowrap bg-slate-900/90 text-red-200 hover:bg-red-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-red-500/30 backdrop-blur-xl transition-all shadow-lg flex items-center gap-2 transform hover:scale-105">
+                        <span>🚦</span> Пробки
+                    </button>
+                    <button onclick="filterMap('services')" class="whitespace-nowrap bg-slate-900/90 text-cyan-200 hover:bg-cyan-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-cyan-500/30 backdrop-blur-xl transition-all shadow-lg flex items-center gap-2 transform hover:scale-105">
+                        <span>🏛</span> ЦОНы (10)
+                    </button>
+                    <button onclick="filterMap('food')" class="whitespace-nowrap bg-slate-900/90 text-orange-200 hover:bg-orange-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-orange-500/30 backdrop-blur-xl transition-all shadow-lg flex items-center gap-2 transform hover:scale-105">
+                        <span>🍔</span> Еда (10)
+                    </button>
+                    <button onclick="filterMap('leisure')" class="whitespace-nowrap bg-slate-900/90 text-green-200 hover:bg-green-600 hover:text-white px-5 py-3 rounded-2xl text-xs font-bold border border-green-500/30 backdrop-blur-xl transition-all shadow-lg flex items-center gap-2 transform hover:scale-105">
+                        <span>🌳</span> Отдых (10)
+                    </button>
                 </div>
                 
                 <div id="map" class="h-[550px] w-full rounded-[2rem] bg-[#0b1221] z-0 shadow-inner"></div>
 
-                <button onclick="locateUser()" class="absolute bottom-10 right-6 z-[400] bg-white text-slate-900 p-3 rounded-2xl shadow-2xl hover:bg-cyan-50 transition-all border border-slate-200 flex items-center justify-center">
+                <button onclick="locateUser()" class="absolute bottom-10 right-6 z-[400] bg-white text-slate-900 p-3 rounded-2xl shadow-2xl hover:bg-cyan-50 transition-all border border-slate-200">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 </button>
             </div>
 
-            <div id="career" class="glass rounded-[2.5rem] p-6 border border-blue-500/10">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-display text-xl font-bold text-white flex items-center gap-2">Смарт Работа <span class="h-2 w-2 bg-cyan-500 rounded-full animate-pulse"></span></h3>
-                    <div class="flex bg-slate-900/60 p-1 rounded-xl">
-                        <button onclick="switchJobTab('vacancies')" id="tab-vacancies" class="tab-active px-4 py-2 rounded-lg text-[10px] font-bold uppercase">Вакансии</button>
-                        <button onclick="switchJobTab('internships')" id="tab-intern" class="tab-inactive px-4 py-2 rounded-lg text-[10px] font-bold uppercase ml-1">Стажировки</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="career">
+                
+                <div class="glass rounded-[2.5rem] p-6 flex flex-col h-[750px] border border-blue-500/10 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/20 blur-[80px] pointer-events-none"></div>
+                    
+                    <div class="flex justify-between items-center mb-6 relative z-10">
+                        <div>
+                            <h3 class="font-display text-xl font-bold text-white flex items-center gap-2">
+                                Смарт Работа
+                                <span class="flex h-2 w-2 relative">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                </span>
+                            </h3>
+                            <p class="text-[11px] text-slate-400 mt-1 font-medium">AI Подборка</p>
+                        </div>
+                        <div class="flex bg-slate-900/60 p-1.5 rounded-xl border border-white/5">
+                            <button id="tab-vacancies" onclick="switchJobTab('vacancies')" class="tab-active px-5 py-2 rounded-lg text-[10px] font-bold transition-all uppercase tracking-wide">Вакансии</button>
+                            <button id="tab-intern" onclick="switchJobTab('internships')" class="tab-inactive px-5 py-2 rounded-lg text-[10px] font-bold transition-all uppercase tracking-wide">Стажировки</button>
+                        </div>
+                    </div>
+                    
+                    <div id="jobs-container" class="flex-1 overflow-y-auto custom-scroll space-y-3 pr-2 relative z-10">
+                        </div>
+                </div>
+
+                <div id="mentors" class="glass rounded-[2.5rem] p-8 flex flex-col relative overflow-hidden group border-t border-purple-500/20">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-transparent pointer-events-none"></div>
+                    
+                    <div class="relative z-10 h-full flex flex-col justify-between">
+                        <div>
+                            <div class="inline-flex items-center gap-3 mb-6">
+                                <div class="p-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl text-2xl shadow-[0_0_20px_rgba(139,92,246,0.3)] animate-float">🎓</div>
+                            </div>
+                            
+                            <h3 class="font-display text-3xl font-bold mb-3 text-white">Менторство</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-8 opacity-90">
+                                Не совершай чужих ошибок. Найди наставника в базе Ozge Qadam.
+                            </p>
+                            
+                            <div class="flex items-center gap-5 mb-8 bg-slate-800/40 p-5 rounded-[1.5rem] border border-white/5 backdrop-blur-md">
+                                <div class="flex -space-x-4 pl-2">
+                                    <img src="https://i.pravatar.cc/150?u=12" class="w-14 h-14 rounded-full border-4 border-[#0f172a] ring-2 ring-purple-500/30">
+                                    <img src="https://i.pravatar.cc/150?u=22" class="w-14 h-14 rounded-full border-4 border-[#0f172a] ring-2 ring-purple-500/30">
+                                    <img src="https://i.pravatar.cc/150?u=32" class="w-14 h-14 rounded-full border-4 border-[#0f172a] ring-2 ring-purple-500/30">
+                                    <div class="w-14 h-14 rounded-full border-4 border-[#0f172a] bg-slate-700 flex items-center justify-center text-[11px] font-bold text-white shadow-inner">+50</div>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white text-sm">Топ Менторы</div>
+                                    <div class="text-xs text-purple-300 font-medium">Онлайн сейчас</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openModal('mentors')" class="w-full bg-white text-slate-950 font-bold py-4 rounded-2xl hover:bg-purple-50 transition shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:scale-[1.02]">
+                            Выбрать наставника →
+                        </button>
                     </div>
                 </div>
-                <div id="jobs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
+
+            <div id="services" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div onclick="openModal('risks')" class="glass-card p-6 rounded-[2rem] cursor-pointer group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-9xl opacity-[0.03] rotate-12 group-hover:rotate-0 transition duration-700">🛡️</div>
+                    <div class="flex justify-between items-center mb-6 relative z-10">
+                        <div class="text-4xl group-hover:scale-110 transition drop-shadow-[0_0_15px_rgba(239,68,68,0.4)]">🛡️</div>
+                        <div class="w-10 h-10 rounded-full bg-slate-800 border border-white/5 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-red-500 transition shadow-lg">➜</div>
+                    </div>
+                    <h4 class="font-display font-bold text-lg text-white mb-2">Оценка Рисков</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300">
+                        Чек-листы безопасности и PDF гайд.
+                    </p>
+                </div>
+
+                <a href="https://t.me/RabotyAlmaty" target="_blank" class="glass-card p-6 rounded-[2rem] cursor-pointer group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-9xl opacity-[0.03] rotate-12 group-hover:rotate-0 transition duration-700">✈️</div>
+                    <div class="flex justify-between items-center mb-6 relative z-10">
+                        <div class="text-4xl group-hover:scale-110 transition drop-shadow-[0_0_15px_rgba(59,130,246,0.4)]">✈️</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(37,99,235,0.5)] animate-pulse">➜</div>
+                    </div>
+                    <h4 class="font-display font-bold text-lg text-white mb-2">Telegram Канал</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300">
+                        Вакансии и чат: @RabotyAlmaty.
+                    </p>
+                </a>
+                
+                 <div onclick="openModal('gov')" class="glass-card p-6 rounded-[2rem] cursor-pointer group relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 text-9xl opacity-[0.03] rotate-12 group-hover:rotate-0 transition duration-700">🇰🇿</div>
+                    <div class="flex justify-between items-center mb-6 relative z-10">
+                        <div class="text-4xl group-hover:scale-110 transition drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]">🇰🇿</div>
+                        <div class="w-10 h-10 rounded-full bg-slate-800 border border-white/5 flex items-center justify-center text-slate-400 group-hover:text-white group-hover:bg-cyan-500 transition shadow-lg">➜</div>
+                    </div>
+                    <h4 class="font-display font-bold text-lg text-white mb-2">E-gov Навигатор</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300">
+                        ИИН, ЭЦП и Справки.
+                    </p>
+                </div>
+            </div>
+
         </div>
     </main>
 
-    <dialog id="auth-modal" class="bg-transparent backdrop:bg-[#030712]/95 backdrop:backdrop-blur-xl p-0 w-full max-w-md rounded-[2.5rem] m-auto">
-        <div class="bg-[#0f172a] border border-cyan-500/20 rounded-[2.5rem] text-white p-8 relative">
-            <button onclick="document.getElementById('auth-modal').close()" class="absolute top-6 right-6 text-slate-400">✕</button>
-            <h2 class="text-xl font-bold mb-6">Вход в систему</h2>
-            <div class="space-y-4">
-                <input type="text" placeholder="Email / Телефон" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm outline-none focus:border-cyan-500">
-                <input type="password" placeholder="Пароль" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm outline-none focus:border-cyan-500">
-                <button class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-bold transition">Войти</button>
+    <dialog id="main-modal" class="bg-transparent backdrop:bg-[#030712]/90 backdrop:backdrop-blur-xl p-0 w-full max-w-3xl rounded-[2.5rem] m-auto shadow-2xl transition-all duration-300">
+        <div class="bg-[#0f172a] border border-white/10 rounded-[2.5rem] text-white p-8 relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+            <button onclick="document.getElementById('main-modal').close()" class="absolute top-6 right-6 bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-full flex items-center justify-center text-slate-300 transition z-50 border border-white/5 hover:rotate-90 duration-300">✕</button>
+            <div id="modal-content" class="relative z-10 max-h-[80vh] overflow-y-auto custom-scroll pr-2"></div>
+        </div>
+    </dialog>
+
+    <dialog id="auth-modal" class="bg-transparent backdrop:bg-[#030712]/95 backdrop:backdrop-blur-xl p-0 w-full max-w-md rounded-[2.5rem] m-auto shadow-2xl">
+        <div class="bg-[#0f172a] border border-cyan-500/20 rounded-[2.5rem] text-white p-8 relative overflow-hidden">
+            <button onclick="document.getElementById('auth-modal').close()" class="absolute top-6 right-6 text-slate-400 hover:text-white transition">✕</button>
+            
+            <div class="flex gap-4 border-b border-white/10 pb-4 mb-6">
+                <button id="btn-login" onclick="toggleAuth('login')" class="text-lg font-bold text-white border-b-2 border-cyan-500 pb-1">Вход</button>
+                <button id="btn-register" onclick="toggleAuth('register')" class="text-lg font-bold text-slate-500 hover:text-white pb-1 transition">Регистрация</button>
+            </div>
+
+            <div id="auth-form" class="space-y-4">
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Email / Телефон</label>
+                    <input type="text" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none transition">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Пароль</label>
+                    <input type="password" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none transition">
+                </div>
+                
+                <div id="register-fields" class="hidden space-y-4 animate-fade-in">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase">Имя</label>
+                        <input type="text" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none transition">
+                    </div>
+                    <div class="space-y-2">
+                         <label class="text-xs font-bold text-slate-400 uppercase">Город</label>
+                        <select class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none">
+                            <option>Алматы</option>
+                            <option>Астана</option>
+                            <option>Шымкент</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3 rounded-xl mt-4 shadow-[0_0_20px_rgba(6,182,212,0.3)] transition transform active:scale-95">
+                    <span id="auth-submit-text">Войти в аккаунт</span>
+                </button>
+                
+                <p class="text-center text-xs text-slate-500 mt-4">Входя в систему, вы принимаете условия Ozge Qadam.</p>
             </div>
         </div>
     </dialog>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // --- ДАННЫЕ ---
-        const mapLocations = {
-            jobs: [{ lat: 43.235, lng: 76.915, title: "Ozge Media", desc: "SMM Менеджер" }, { lat: 43.240, lng: 76.905, title: "Coffee Boom", desc: "Бариста" }],
-            services: [{ lat: 43.2389, lng: 76.8897, title: "ЦОН Бостандык", desc: "Ходжанова 9" }],
-            food: [{ lat: 43.2355, lng: 76.9155, title: "Nedelka", desc: "Кофейня" }],
-            leisure: [{ lat: 43.2560, lng: 76.9280, title: "Парк 28 Панфиловцев", desc: "История" }]
-        };
-
+        // --- DATA (10 items per category) ---
+        
         const jobsData = {
-            vacancies: [{ title: 'SMM Менеджер', salary: '300 000 ₸', company: 'Ozge Media', hot: true }, { title: 'Бариста', salary: '180 000 ₸', company: 'Coffee Boom', hot: false }],
-            internships: [{ title: 'Frontend Intern', salary: 'Paid', company: 'Kolesa Group', hot: true }]
+            vacancies: [
+                { title: 'SMM Менеджер', salary: '300 000 ₸', company: 'Ozge Media', phone: '+77755088820', tags: ['Офис', 'Тренды'], hot: true },
+                { title: 'Бариста', salary: '180 000 ₸', company: 'Coffee Boom', phone: '+77755088820', tags: ['Смены'], hot: false },
+                { title: 'Водитель', salary: '450 000 ₸', company: 'Yandex Go', phone: '+77755088820', tags: ['Авто', 'Свободно'], hot: true },
+                { title: 'Кассир', salary: '210 000 ₸', company: 'Magnum', phone: '+77755088820', tags: ['Официально'], hot: false },
+                { title: 'Sales Manager', salary: 'от 500 000 ₸', company: 'BI Group', phone: '+77755088820', tags: ['Бонусы'], hot: true },
+                { title: 'Администратор', salary: '220 000 ₸', company: 'Beauty Lab', phone: '+77755088820', tags: ['2/2'], hot: false },
+                { title: 'Официант', salary: '250 000 ₸', company: 'Navat', phone: '+77755088820', tags: ['Чаевые'], hot: false },
+                { title: 'Курьер', salary: '300 000 ₸', company: 'Wolt', phone: '+77755088820', tags: ['Вело/Мото'], hot: true },
+                { title: 'Консультант', salary: '190 000 ₸', company: 'Technodom', phone: '+77755088820', tags: ['Техника'], hot: false },
+                { title: 'Повар', salary: '280 000 ₸', company: 'Lanzhou', phone: '+77755088820', tags: ['Питание'], hot: false }
+            ],
+            internships: [
+                { title: 'Frontend Intern', salary: 'Paid', company: 'Kolesa Group', phone: '+77755088820', tags: ['React'], hot: true },
+                { title: 'HR Стажер', salary: 'Unpaid', company: 'Air Astana', phone: '+77755088820', tags: ['English'], hot: false },
+                { title: 'Data Science', salary: '150 000 ₸', company: 'Beeline', phone: '+77755088820', tags: ['Python'], hot: true },
+                { title: 'Marketing', salary: '100 000 ₸', company: 'Chocofamily', phone: '+77755088820', tags: ['Creative'], hot: false }
+            ]
         };
 
-        // --- ИНИЦИАЛИЗАЦИЯ КАРТЫ ---
-        const map = L.map('map', {zoomControl: false}).setView([43.238949, 76.889709], 12);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
-        let markersLayer = L.layerGroup().addTo(map);
-        let userMarker; // Переменная для маркера пользователя
+        const mapLocations = {
+            // 10 Вакансий (примерное расположение)
+            jobs: [
+                { lat: 43.235, lng: 76.915, title: "Ozge Media", desc: "SMM Менеджер" },
+                { lat: 43.240, lng: 76.905, title: "Coffee Boom", desc: "Бариста" },
+                { lat: 43.250, lng: 76.920, title: "Yandex Hub", desc: "Водители" },
+                { lat: 43.220, lng: 76.890, title: "Magnum", desc: "Кассир" },
+                { lat: 43.210, lng: 76.930, title: "BI Group", desc: "Менеджер" },
+                { lat: 43.260, lng: 76.940, title: "Beauty Lab", desc: "Администратор" },
+                { lat: 43.255, lng: 76.935, title: "Navat", desc: "Официант" },
+                { lat: 43.230, lng: 76.950, title: "Wolt Partner", desc: "Курьер" },
+                { lat: 43.245, lng: 76.910, title: "Technodom", desc: "Консультант" },
+                { lat: 43.225, lng: 76.900, title: "Lanzhou", desc: "Повар" }
+            ],
+            // 10 ЦОНов / Госучреждений
+            services: [
+                { lat: 43.2389, lng: 76.8897, title: "ЦОН Бостандык", desc: "Ходжанова 9" },
+                { lat: 43.2625, lng: 76.9298, title: "ЦОН Медеу", desc: "Маркова 44" },
+                { lat: 43.2201, lng: 76.8765, title: "ЦОН Ауэзов", desc: "Жандосова 51" },
+                { lat: 43.2500, lng: 76.8500, title: "ЦОН Алатау", desc: "Мкр. Нуркент" },
+                { lat: 43.2700, lng: 76.9500, title: "ЦОН Жетысу", desc: "Кулагера 1" },
+                { lat: 43.2350, lng: 76.9100, title: "Центр Занятости", desc: "Назарбаева 50" },
+                { lat: 43.2450, lng: 76.9450, title: "Миграционная Полиция", desc: "Карасай батыра" },
+                { lat: 43.2100, lng: 76.8900, title: "Акимат Бостандык", desc: "Айманова" },
+                { lat: 43.2050, lng: 76.8850, title: "Налоговая", desc: "Мынбаева" },
+                { lat: 43.2750, lng: 76.9150, title: "СпецЦОН", desc: "Авто-услуги" }
+            ],
+            // 10 Мест Еды
+            food: [
+                { lat: 43.2355, lng: 76.9155, title: "Nedelka", desc: "Кофейня" },
+                { lat: 43.2580, lng: 76.9400, title: "Центр Плова", desc: "Восточная кухня" },
+                { lat: 43.2450, lng: 76.9200, title: "Каганат", desc: "Столовая" },
+                { lat: 43.2600, lng: 76.8800, title: "Bahandi Burger", desc: "Бургеры" },
+                { lat: 43.2300, lng: 76.9500, title: "KFC Достык", desc: "Фастфуд" },
+                { lat: 43.2150, lng: 76.8900, title: "Lanzhou", desc: "Лапша" },
+                { lat: 43.2550, lng: 76.9350, title: "Шашлычная", desc: "Кирова" },
+                { lat: 43.2400, lng: 76.9050, title: "Coffee Boom", desc: "24/7" },
+                { lat: 43.2650, lng: 76.9100, title: "Zheka Doner", desc: "Донеры" },
+                { lat: 43.2200, lng: 76.9300, title: "Dodo Pizza", desc: "Пицца" }
+            ],
+            // 10 Мест Отдыха
+            leisure: [
+                { lat: 43.2560, lng: 76.9280, title: "Парк 28 Панфиловцев", desc: "История", rating: 4.8 },
+                { lat: 43.2290, lng: 76.9600, title: "Кок-Тобе", desc: "Вид на город", rating: 4.9 },
+                { lat: 43.2300, lng: 76.9100, title: "Парк Президента", desc: "Природа", rating: 4.7 },
+                { lat: 43.2450, lng: 76.9150, title: "Бот. Сад", desc: "Тишина", rating: 5.0 },
+                { lat: 43.2500, lng: 76.9250, title: "Арбат", desc: "Прогулки", rating: 4.6 },
+                { lat: 43.1950, lng: 77.0300, title: "Медеу", desc: "Горы", rating: 4.9 },
+                { lat: 43.2380, lng: 76.9450, title: "Терренкур", desc: "Речка", rating: 4.8 },
+                { lat: 43.2650, lng: 76.9500, title: "Зоопарк", desc: "Для семьи", rating: 4.5 },
+                { lat: 43.2350, lng: 76.9250, title: "Новая Площадь", desc: "Центр", rating: 4.6 },
+                { lat: 43.2050, lng: 76.8850, title: "Mega Center", desc: "Шопинг", rating: 4.7 }
+            ]
+        };
 
-        // --- ФУНКЦИИ КАРТЫ ---
+        // --- MAP LOGIC ---
+        const map = L.map('map', {zoomControl: false}).setView([43.238949, 76.889709], 12);
+        L.control.zoom({position: 'bottomright'}).addTo(map);
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        let markersLayer = L.layerGroup().addTo(map);
+        let trafficLayer = L.layerGroup();
+        let isTrafficOn = false;
+
+        // НОВОЕ: Переменная для маркера
+        let userMarker;
+
         function filterMap(type) {
+            if (type === 'traffic') { toggleTraffic(); return; }
+
             markersLayer.clearLayers();
-            const items = mapLocations[type] || [];
+            let items = [];
+            let iconColor = 'blue';
+            let iconEmoji = '📍';
+
+            if (type === 'jobs') {
+                items = mapLocations.jobs; // Берем 10 локаций
+                iconColor = 'indigo';
+                iconEmoji = '💼';
+            } else {
+                items = mapLocations[type] || [];
+                if (type === 'leisure') { iconColor = 'green'; iconEmoji = '🌳'; }
+                else if (type === 'services') { iconColor = 'cyan'; iconEmoji = '🏛'; }
+                else if (type === 'food') { iconColor = 'orange'; iconEmoji = '🍔'; }
+            }
+
             items.forEach(item => {
-                const icon = L.divIcon({ className: 'bg-transparent', html: `<div class="w-8 h-8 rounded-full bg-blue-600 border-2 border-white flex items-center justify-center shadow-lg">📍</div>` });
-                L.marker([item.lat, item.lng], {icon}).bindPopup(`<div style="color:black"><b>${item.title}</b><br>${item.desc}</div>`).addTo(markersLayer);
+                const icon = L.divIcon({
+                    className: 'bg-transparent',
+                    html: `<div class="w-8 h-8 rounded-full bg-${iconColor}-600 border-2 border-white shadow-[0_0_20px_${iconColor}] flex items-center justify-center text-sm transform hover:scale-125 transition cursor-pointer z-10">${iconEmoji}</div>`
+                });
+
+                let ratingHtml = '';
+                if (item.rating) {
+                    ratingHtml = `<div class="flex items-center gap-1 text-yellow-400 text-xs mb-1"><span>★</span> <b>${item.rating}</b></div>`;
+                }
+
+                const popup = `
+                    <div class="min-w-[160px] p-1">
+                        <h3 class="font-bold text-sm text-black mb-1">${item.title}</h3>
+                        ${ratingHtml}
+                        <p class="text-[11px] text-gray-600 mb-2 leading-tight">${item.desc}</p>
+                        ${type === 'jobs' ? `<a href="tel:+77755088820" class="block w-full text-center bg-green-600 rounded-lg py-1.5 text-[10px] font-bold text-white hover:bg-green-500 transition">Позвонить</a>` : ''}
+                    </div>
+                `;
+                L.marker([item.lat, item.lng], {icon: icon}).bindPopup(popup).addTo(markersLayer);
             });
-            if(items.length > 0) map.fitBounds(new L.featureGroup(markersLayer.getLayers()).getBounds().pad(0.2));
+            
+            if(items.length > 0) {
+                const group = new L.featureGroup(markersLayer.getLayers());
+                map.fitBounds(group.getBounds().pad(0.2));
+            }
         }
 
-        // --- ГЕОЛОКАЦИЯ (ИСПРАВЛЕННАЯ) ---
+        // НОВОЕ: Логика геолокации
         function locateUser() {
-            if (!navigator.geolocation) return alert("Браузер не поддерживает геолокацию");
-            
-            const options = { enableHighAccuracy: true, timeout: 7000, maximumAge: 0 };
-
-            navigator.geolocation.getCurrentPosition((pos) => {
-                const { latitude, longitude } = pos.coords;
-                if (userMarker) map.removeLayer(userMarker); // Удаляем старый маркер
-
-                map.flyTo([latitude, longitude], 16);
-                
+            if (!navigator.geolocation) return;
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                if (userMarker) map.removeLayer(userMarker);
+                map.flyTo([latitude, longitude], 15);
                 const userIcon = L.divIcon({ className: 'user-location-marker', iconSize: [18, 18] });
                 userMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
-                
-                // Исправленный Popup с белым фоном для читаемости
                 userMarker.bindPopup(`<div style="color: black; padding: 5px;"><b>Вы здесь</b></div>`).openPopup();
-            }, () => alert("Не удалось найти вас на карте. Проверьте GPS."), options);
+            }, () => alert("Ошибка геолокации"), { enableHighAccuracy: true });
         }
 
-        // --- ДОП. ФУНКЦИИ ---
-        function switchJobTab(type) {
-            renderJobs(type);
-            document.getElementById('tab-vacancies').className = type === 'vacancies' ? 'tab-active px-4 py-2 rounded-lg text-[10px] font-bold uppercase' : 'tab-inactive px-4 py-2 rounded-lg text-[10px] font-bold uppercase';
-            document.getElementById('tab-intern').className = type === 'internships' ? 'tab-active px-4 py-2 rounded-lg text-[10px] font-bold uppercase ml-1' : 'tab-inactive px-4 py-2 rounded-lg text-[10px] font-bold uppercase ml-1';
+        function toggleTraffic() {
+            if (isTrafficOn) {
+                map.removeLayer(trafficLayer);
+                trafficLayer.clearLayers();
+                document.getElementById('traffic-btn').classList.remove('bg-red-600', 'text-white');
+                document.getElementById('traffic-btn').classList.add('bg-slate-900/90', 'text-red-200');
+                isTrafficOn = false;
+            } else {
+                const roads = [
+                    [[43.218, 76.900], [43.225, 76.950], 'red'], // Аль-Фараби
+                    [[43.240, 76.880], [43.242, 76.940], '#eab308'], // Абая
+                    [[43.260, 76.930], [43.220, 76.930], 'red'], // Сейфуллина
+                    [[43.250, 76.910], [43.250, 76.950], '#eab308'], // Толе би
+                    [[43.230, 76.900], [43.270, 76.900], 'red'] // Розыбакиева
+                ];
+                
+                roads.forEach(r => {
+                    L.polyline([r[0], r[1]], {color: r[2], weight: 5, opacity: 0.7}).addTo(trafficLayer);
+                });
+                
+                trafficLayer.addTo(map);
+                document.getElementById('traffic-btn').classList.remove('bg-slate-900/90', 'text-red-200');
+                document.getElementById('traffic-btn').classList.add('bg-red-600', 'text-white');
+                isTrafficOn = true;
+            }
         }
 
+        // --- AUTH & OTHER LOGIC ---
+        function openAuthModal() {
+            document.getElementById('auth-modal').showModal();
+        }
+
+        function toggleAuth(type) {
+            const btnLogin = document.getElementById('btn-login');
+            const btnRegister = document.getElementById('btn-register');
+            const regFields = document.getElementById('register-fields');
+            const submitText = document.getElementById('auth-submit-text');
+
+            if (type === 'login') {
+                btnLogin.classList.add('text-white', 'border-b-2', 'border-cyan-500');
+                btnLogin.classList.remove('text-slate-500');
+                btnRegister.classList.remove('text-white', 'border-b-2', 'border-cyan-500');
+                btnRegister.classList.add('text-slate-500');
+                regFields.classList.add('hidden');
+                submitText.innerText = "Войти в аккаунт";
+            } else {
+                btnRegister.classList.add('text-white', 'border-b-2', 'border-cyan-500');
+                btnRegister.classList.remove('text-slate-500');
+                btnLogin.classList.remove('text-white', 'border-b-2', 'border-cyan-500');
+                btnLogin.classList.add('text-slate-500');
+                regFields.classList.remove('hidden');
+                submitText.innerText = "Создать аккаунт";
+            }
+        }
+
+        // --- JOBS RENDER ---
         function renderJobs(type) {
             const container = document.getElementById('jobs-container');
-            container.innerHTML = (jobsData[type] || []).map(job => `
-                <div class="glass-card p-4 rounded-2xl relative">
-                    ${job.hot ? '<span class="absolute top-2 right-2 text-[8px] bg-red-500 text-white px-2 py-0.5 rounded-full">HOT</span>' : ''}
-                    <h4 class="text-white font-bold text-sm">${job.title}</h4>
-                    <p class="text-xs text-green-400 font-bold mt-1">${job.salary}</p>
-                    <p class="text-[10px] text-slate-400 mt-1">${job.company}</p>
-                </div>
-            `).join('');
+            container.innerHTML = '';
+            
+            jobsData[type].forEach(job => {
+                const tagsHtml = job.tags.map(t => `<span class="text-[9px] bg-slate-700/50 px-2 py-1 rounded-md border border-slate-600 text-slate-300">${t}</span>`).join('');
+                const hotHtml = job.hot ? `<span class="absolute top-3 right-3 flex items-center gap-1 bg-red-500/10 text-red-400 text-[9px] font-bold px-2 py-0.5 rounded-full border border-red-500/20 animate-pulse">🔥 Hot</span>` : '';
+                
+                const card = `
+                    <div class="glass-card p-4 rounded-2xl relative group cursor-pointer hover:bg-slate-800/80">
+                        ${hotHtml}
+                        <div class="flex justify-between items-start mb-2 pr-8">
+                            <h4 class="font-bold text-sm text-white group-hover:text-cyan-400 transition">${job.title}</h4>
+                        </div>
+                        <div class="flex items-center gap-2 mb-3">
+                             <span class="text-xs font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded-lg border border-green-500/20">${job.salary}</span>
+                             <span class="text-[10px] text-slate-400">• ${job.company}</span>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div class="flex flex-wrap gap-2">
+                                ${tagsHtml}
+                            </div>
+                            <a href="tel:${job.phone}" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:to-blue-400 text-white p-2 rounded-xl transition shadow-lg shadow-blue-500/20 active:scale-95">
+                                📞
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+        
+        function switchJobTab(type) {
+            const btnVac = document.getElementById('tab-vacancies');
+            const btnInt = document.getElementById('tab-intern');
+            const baseClass = "px-5 py-2 rounded-lg text-[10px] font-bold transition-all uppercase tracking-wide";
+            
+            if (type === 'vacancies') {
+                btnVac.className = `tab-active ${baseClass}`;
+                btnInt.className = `tab-inactive ${baseClass}`;
+            } else {
+                btnVac.className = `tab-inactive ${baseClass}`;
+                btnInt.className = `tab-active ${baseClass}`;
+            }
+            renderJobs(type);
         }
 
-        function openAuthModal() { document.getElementById('auth-modal').showModal(); }
+        // --- MENTORS & PDF ---
+        function openModal(type) {
+            const modal = document.getElementById('main-modal');
+            const content = document.getElementById('modal-content');
+            
+            if (type === 'mentors') {
+                const mentors = [
+                   {name:"Айбек", role:"IT", age:28}, {name:"Сауле", role:"Юрист", age:34}, 
+                   {name:"Тимур", role:"Бизнес", age:25}, {name:"Мария", role:"HR", age:30},
+                   {name:"Ержан", role:"Инженер", age:40}, {name:"Алина", role:"SMM", age:23}
+                ];
+                let html = `<h2 class="text-2xl font-bold mb-4">Менторы</h2><div class="grid grid-cols-2 gap-4">`;
+                mentors.forEach(m => {
+                    html += `
+                        <div class="bg-slate-800 p-4 rounded-xl flex items-center gap-3">
+                            <img src="https://i.pravatar.cc/150?u=${m.name}" class="w-12 h-12 rounded-full">
+                            <div>
+                                <div class="font-bold text-sm">${m.name}</div>
+                                <div class="text-xs text-slate-400">${m.role} • ${m.age} лет</div>
+                                <a href="https://wa.me/77755088820" class="text-[10px] text-green-400 hover:text-green-300">Написать в WhatsApp</a>
+                            </div>
+                        </div>`;
+                });
+                html += `</div>`;
+                content.innerHTML = html;
+            } 
+            else if (type === 'risks') {
+                content.innerHTML = `
+                    <h2 class="text-2xl font-bold mb-4 text-red-400">⚠️ Оценка рисков</h2>
+                    <ul class="space-y-3 mb-6 text-sm text-slate-300">
+                        <li>• Проверяй договор аренды (Krisha.kz)</li>
+                        <li>• Не отдавай паспорт в залог</li>
+                        <li>• Проверь работодателя на Egov</li>
+                    </ul>
+                    <a href="data-smart_implementing_digital_responses.pdf" download="Ozge_Risk_Guide.pdf" class="block w-full text-center bg-red-600 py-3 rounded-xl font-bold hover:bg-red-500">Скачать PDF Гайд</a>
+                `;
+            }
+            else if (type === 'gov') {
+                 content.innerHTML = `
+                    <h2 class="text-2xl font-bold mb-4 text-cyan-400">E-gov Услуги</h2>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="bg-slate-800 p-4 rounded-xl text-center">🆔 ИИН / ЭЦП</div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center">🏥 Медицина</div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center">🏠 Жилье</div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center">💼 Бизнес</div>
+                    </div>
+                    <a href="https://egov.kz" target="_blank" class="block w-full text-center bg-cyan-600 py-3 rounded-xl font-bold">Перейти на Egov.kz</a>
+                `;
+            }
+            modal.showModal();
+        }
 
-        window.onload = () => {
-            renderJobs('vacancies');
-            filterMap('jobs');
-            locateUser(); // Авто-поиск при входе
-        };
+        // Init
+        renderJobs('vacancies');
+        setTimeout(() => { filterMap('jobs'); locateUser(); }, 500);
 
-        // Простая отправка сообщений
+        // Chat
         document.getElementById('send-btn').onclick = () => {
-            const input = document.getElementById('user-input');
-            if(!input.value) return;
-            document.getElementById('chat-window').innerHTML += `<div class="flex justify-end"><div class="chat-bubble-user p-3 rounded-2xl text-sm text-white">${input.value}</div></div>`;
-            input.value = '';
+            const val = document.getElementById('user-input').value;
+            if(!val) return;
+            const chat = document.getElementById('chat-window');
+            chat.innerHTML += `
+                <div class="flex items-center justify-end gap-3 animate-fade-in">
+                    <div class="chat-bubble-user p-4 rounded-2xl text-white text-sm shadow-lg max-w-[90%]">${val}</div>
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs border border-white/20">Вы</div>
+                </div>`;
+            document.getElementById('user-input').value = '';
+            setTimeout(() => {
+                chat.innerHTML += `
+                    <div class="flex items-start gap-3 animate-fade-in">
+                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-sm border border-white/10">🤖</div>
+                        <div class="chat-bubble-bot p-4 rounded-2xl text-slate-200 text-sm shadow-lg max-w-[90%]">Секунду, обрабатываю запрос... ⚡️</div>
+                    </div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 800);
         };
     </script>
 </body>
 </html>
+
